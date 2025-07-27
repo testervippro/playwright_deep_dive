@@ -48,8 +48,8 @@
 
 When you call a client API like `page.goto()`:
 
-1. Client `Page` (ChannelOwner subclass) sends message via `Connection`
-2. Server `DispatcherConnection` routes to corresponding `PageDispatcher`
+1. Client `Page` (ChannelOwner subclass) sends message via `Connection` (playwright-core\lib\client\connection.js)
+2. Server `DispatcherConnection` routes to corresponding `PageDispatcher`(playwright-core\lib\server\dispatchers\pageDispatcher.js)
 3. `PageDispatcher` executes the command on the actual browser
 4. Response flows back through the same path
 
