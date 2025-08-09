@@ -64,7 +64,11 @@ export default defineConfig({
         screenshot: "only-on-failure",
         viewport: null,
         deviceScaleFactor: undefined,
-        headless: false,
+        // headless = true on CI, false locally
+        //// This always returns a boolean value
+        //https://stackoverflow.com/questions/784929/what-does-the-double-exclamation-mark-operator-do-in-javascript
+        //https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Boolean
+        headless: !!process.env.CI,
         launchOptions: {
           args: ["--start-maximized"],
         },
