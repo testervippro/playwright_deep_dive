@@ -1,0 +1,12 @@
+What is storageState in Playwright?
+storageState is a file path where Playwright stores the browser context’s state — including:
+
+✅ Cookies (like auth session cookies)
+
+✅ Local storage (if your app uses it to store login or preferences)
+
+✅ Session storage (if applicable)
+
+This is especially useful to reuse an already logged-in session across multiple tests without logging in again every time.
+
+npx playwright test --project=chrome  if ignore --project=chrome  it will run all brower or commment in to project in playwright.config.ts

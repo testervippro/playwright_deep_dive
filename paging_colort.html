@@ -1,0 +1,252 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <title>Advanced Pagination UI</title>
+    <style>
+      body {
+        font-family: Arial;
+      }
+      .pagination button {
+        margin: 2px;
+        padding: 5px 10px;
+      }
+      .active-page {
+        font-weight: bold;
+        background-color: #007bff;
+        color: white;
+      }
+      #item-list {
+        min-height: 100px;
+        padding: 10px;
+        margin-bottom: 1em;
+        border: 1px solid #ccc;
+      }
+      li {
+        list-style: none;
+        padding: 5px;
+        border: 1px dashed #aaa;
+        margin: 3px 0;
+        cursor: move;
+      }
+      .hidden {
+        display: none;
+      }
+      .toggle-switch {
+        position: relative;
+        display: inline-block;
+        width: 40px;
+        height: 20px;
+      }
+      .toggle-switch input {
+        display: none;
+      }
+      .slider {
+        position: absolute;
+        top: 0;
+        left: 0;
+        right: 0;
+        bottom: 0;
+        background-color: #ccc;
+        border-radius: 20px;
+        transition: 0.4s;
+      }
+      .slider::before {
+        position: absolute;
+        content: "";
+        height: 14px;
+        width: 14px;
+        left: 3px;
+        bottom: 3px;
+        background-color: white;
+        border-radius: 50%;
+        transition: 0.4s;
+      }
+      input:checked + .slider {
+        background-color: #4caf50;
+      }
+      input:checked + .slider::before {
+        transform: translateX(20px);
+      }
+    </style>
+  </head>
+  <body>
+    <h2>Advanced UI with Pagination</h2>
+
+    <div id="controls">
+      <label>
+        Max Items to Show:
+        <input type="range" id="max-range" min="1" max="50" value="50" />
+        <span id="max-range-value">50</span> </label
+      ><br /><br />
+
+      <label>
+        Start:
+        <input
+          type="range"
+          id="start-range"
+          min="1"
+          max="50"
+          value="1"
+          style="width: 200px"
+        />
+        <span id="start-range-val">1</span>
+      </label>
+
+      <label style="margin-left: 10px">
+        End:
+        <input
+          type="range"
+          id="end-range"
+          min="1"
+          max="50"
+          value="50"
+          style="width: 200px"
+        />
+        <span id="end-range-val">50</span>
+      </label>
+      <button onclick="applyRange()">Apply</button><br /><br />
+
+      <label>
+        Background Color:
+        <input type="color" id="bg-color" value="#f0f0f0" /> </label
+      ><br /><br />
+
+      Display Style:
+      <label
+        ><input type="radio" name="display" value="list" checked /> List</label
+      >
+      <label><input type="radio" name="display" value="inline" /> Inline</label
+      ><br /><br />
+
+      Toggle List:
+      <label class="toggle-switch">
+        <input type="checkbox" id="toggle-list" checked />
+        <span class="slider"></span>
+      </label>
+    </div>
+
+    <ul id="item-list" style="background-color: #f0f0f0"></ul>
+    <div id="pagination-container" class="pagination"></div>
+
+    <script>
+      let fullData = Array.from({ length: 50 }, (_, i) => `Item ${i + 1}`);
+      let filteredData = [...fullData];
+      const itemsPerPage = 5;
+      let currentPage = 1;
+
+      const itemList = document.getElementById("item-list");
+
+      function renderList() {
+        const start = (currentPage - 1) * itemsPerPage;
+        const end = start + itemsPerPage;
+        const visibleItems = filteredData.slice(start, end);
+
+        itemList.innerHTML = "";
+        visibleItems.forEach((item) => {
+          const li = document.createElement("li");
+          li.draggable = true;
+          li.textContent = item;
+
+          li.addEventListener("dragstart", (e) => {
+            e.dataTransfer.setData("text/plain", e.target.textContent);
+            e.dataTransfer.effectAllowed = "move";
+          });
+
+          li.addEventListener("dragover", (e) => e.preventDefault());
+
+          li.addEventListener("drop", (e) => {
+            e.preventDefault();
+            const draggedText = e.dataTransfer.getData("text/plain");
+            const targetText = e.target.textContent;
+
+            const fromIndex = filteredData.indexOf(draggedText);
+            const toIndex = filteredData.indexOf(targetText);
+
+            [filteredData[fromIndex], filteredData[toIndex]] = [
+              filteredData[toIndex],
+              filteredData[fromIndex],
+            ];
+
+            renderList();
+          });
+
+          itemList.appendChild(li);
+        });
+      }
+
+      function renderPagination() {
+        const totalPages = Math.ceil(filteredData.length / itemsPerPage);
+        const container = document.getElementById("pagination-container");
+        container.innerHTML = "";
+
+        for (let i = 1; i <= totalPages; i++) {
+          const btn = document.createElement("button");
+          btn.textContent = i;
+          if (i === currentPage) {
+            btn.classList.add("active-page");
+          }
+
+          btn.addEventListener("click", () => {
+            currentPage = i;
+            renderList();
+            renderPagination();
+          });
+
+          container.appendChild(btn);
+        }
+      }
+
+      function applyRange() {
+        const start = parseInt(document.getElementById("start-range").value);
+        const end = parseInt(document.getElementById("end-range").value);
+        const max = parseInt(document.getElementById("max-range").value);
+
+        let startIndex = Math.max(1, Math.min(start, end));
+        let endIndex = Math.min(fullData.length, Math.max(start, end));
+
+        filteredData = fullData.slice(startIndex - 1, endIndex).slice(0, max);
+        currentPage = 1;
+        renderList();
+        renderPagination();
+      }
+
+      // Event Listeners
+      document.getElementById("bg-color").addEventListener("input", (e) => {
+        itemList.style.backgroundColor = e.target.value;
+      });
+
+      document.getElementById("toggle-list").addEventListener("change", (e) => {
+        itemList.classList.toggle("hidden", !e.target.checked);
+      });
+
+      document.getElementById("max-range").addEventListener("input", (e) => {
+        document.getElementById("max-range-value").textContent = e.target.value;
+        applyRange();
+      });
+
+      document.getElementById("start-range").addEventListener("input", (e) => {
+        document.getElementById("start-range-val").textContent = e.target.value;
+      });
+
+      document.getElementById("end-range").addEventListener("input", (e) => {
+        document.getElementById("end-range-val").textContent = e.target.value;
+      });
+
+      document.querySelectorAll('input[name="display"]').forEach((radio) => {
+        radio.addEventListener("change", (e) => {
+          itemList.style.display =
+            e.target.value === "inline" ? "flex" : "block";
+          itemList.style.flexWrap = "wrap";
+          itemList.querySelectorAll("li").forEach((li) => {
+            li.style.marginRight = e.target.value === "inline" ? "10px" : "0";
+          });
+        });
+      });
+
+      // Initial
+      renderList();
+      renderPagination();
+    </script>
+  </body>
+</html>

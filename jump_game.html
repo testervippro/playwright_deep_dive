@@ -1,0 +1,91 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <title>Jump Game Tree Visualization</title>
+    <style>
+      .node {
+        border: 1px solid #444;
+        border-radius: 5px;
+        padding: 10px;
+        margin: 10px;
+        display: inline-block;
+        background-color: #e0f7fa;
+        font-family: sans-serif;
+        min-width: 100px;
+      }
+      .line {
+        height: 20px;
+        border-left: 2px solid #333;
+        margin: 0 auto;
+      }
+      .tree-level {
+        text-align: center;
+        margin-top: 20px;
+      }
+    </style>
+  </head>
+  <body>
+    <h2>Jump Game Tree: nums = [2, 3, 1, 1, 4]</h2>
+    <p>Each node shows the index and max jump range from that position.</p>
+
+    <div class="tree-level">
+      <div class="node">
+        Index 0<br />
+        Jump value: 2<br />
+        Can jump to: 1, 2
+      </div>
+    </div>
+    <div class="line"></div>
+
+    <div class="tree-level">
+      <div class="node">
+        Index 1<br />
+        Jump value: 3<br />
+        Can jump to: 2, 3, 4
+      </div>
+      <div class="node">
+        Index 2<br />
+        Jump value: 1<br />
+        Can jump to: 3
+      </div>
+    </div>
+    <div class="line"></div>
+
+    <div class="tree-level">
+      <div class="node">
+        Index 2<br />
+        Jump value: 1<br />
+        Can jump to: 3
+      </div>
+      <div class="node">
+        Index 3<br />
+        Jump value: 1<br />
+        Can jump to: 4
+      </div>
+      <div class="node">
+        Index 4<br />
+        Jump value: 4<br />
+        Can jump to: (end)
+      </div>
+    </div>
+    <div class="line"></div>
+
+    <div class="tree-level">
+      <div class="node">
+        Index 3<br />
+        Jump value: 1<br />
+        Can jump to: 4
+      </div>
+      <div class="node">
+        Index 4<br />
+        Jump value: 4<br />
+        Can jump to: (end)
+      </div>
+    </div>
+
+    <script>
+      // You can add animation or dynamically generate nodes later.
+    </script>
+  </body>
+</html>
