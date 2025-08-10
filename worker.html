@@ -1,0 +1,14 @@
+<!-- worker.html run to test worker with playwright  -->
+<!DOCTYPE html>
+<html>
+  <head>
+    <title>Web Worker Example</title>
+  </head>
+  <body>
+    <h1>Worker Test Page</h1>
+    <script>
+      const worker = new Worker("worker.js");
+      worker.onmessage = (e) => console.log("Worker result:", e.data);
+    </script>
+  </body>
+</html>
