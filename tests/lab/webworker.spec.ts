@@ -1,9 +1,5 @@
 import { test, expect } from "@playwright/test";
-import { exec } from "child_process";
 
-const runLocalHost = "node server.js";
-
-exec(runLocalHost);
 /*
 Web Worker 101: Introduction & Basics
 What is a Web Worker?

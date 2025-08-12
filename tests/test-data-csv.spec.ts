@@ -11,13 +11,12 @@ interface CsvRecord {
 }
 
 const records: CsvRecord[] = parse(
-  fs.readFileSync(path.join(__dirname, "data", "input.csv")),
+  fs.readFileSync(path.join(__dirname, "..", "data", "input.csv")),
   {
     columns: true,
     skip_empty_lines: true,
   }
 );
-
 
 for (const record of records) {
   test(`foo: ${record.test_case}`, async ({ page }) => {
