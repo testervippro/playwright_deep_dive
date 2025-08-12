@@ -3,8 +3,13 @@ import { exec } from "child_process";
 import { error } from "console";
 import { stderr, stdout } from "process";
 import { TAG } from "./EnumTag";
+import os from "os";
 
 test("Browser Class Tests wsEndPoint", { tag: TAG.IGNORE }, async () => {
+  const platform = os.platform();
+
+  test.skip(platform !== "win32", "This feature is window");
+
   const cmdLaunchChromeInDebugModeWindow = `"C:\\Program Files\\Google\\Chrome\\Application\\chrome.exe" --remote-debugging-port=9222 --user-data-dir="C:\\temp\\chrome-debug"`;
 
   exec(cmdLaunchChromeInDebugModeWindow, (error, stdout) => {
@@ -33,10 +38,13 @@ test("Browser Class Tests wsEndPoint", { tag: TAG.IGNORE }, async () => {
   await page.screenshot({ path: "screenshot.png" });
 });
 
-test(
+test.skip(
   "Browser Class Tests with CDP session",
   { tag: TAG.IGNORE },
   async ({ playwright }) => {
+    const platform = os.platform();
+
+    test.skip(platform !== "win32", "This feature is window");
     // @ts-ignore
     // Make sure you launch Chromium with remote debugging flag, e.g.:
     // on window "C:\Program Files\Google\Chrome\Application\chrome.exe" --remote-debugging-port=9222 --user-data-dir="C:\temp\chrome-debug"
