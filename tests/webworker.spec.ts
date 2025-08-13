@@ -1,9 +1,6 @@
 import { test, expect } from "@playwright/test";
 import { exec } from "child_process";
 
-const runLocalHost = "node server.js";
-
-exec(runLocalHost);
 /*
 Web Worker 101: Introduction & Basics
 What is a Web Worker?
@@ -28,6 +25,11 @@ Whenever the worker calls postMessage(...), this event handler in the main threa
 };
 
 */
+
+test.beforeAll(async () => {
+  const runLocalHost = "node server.js";
+  exec(runLocalHost);
+});
 
 test("should log worker creation and destruction", async ({ page }) => {
   // Navigate to the page that spawns a web worker

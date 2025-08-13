@@ -39,5 +39,5 @@ test("Interact with embedded iFrame using frameLocator", async ({ page }) => {
   console.log("Iframe page title:", iframeTitle);
 
   // You can also add an assertion if needed
-  expect(iframeTitle).toContain("CSS Tutorial");
+  await expect(iframeTitle).toContain("CSS Tutorial");
 });

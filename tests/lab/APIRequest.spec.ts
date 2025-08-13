@@ -14,10 +14,10 @@ test.describe("API Request Tests", () => {
 
   test("GET /posts", { tag: TAG.SMOKE }, async () => {
     const response = await apiContext.get("/posts");
-    expect(response.status()).toBe(200);
+    await expect(response.status()).toBe(200);
     const data = await response.json();
-    expect(data).toBeInstanceOf(Array);
-    expect(data.length).toBeGreaterThan(0);
+    await expect(data).toBeInstanceOf(Array);
+    await expect(data.length).toBeGreaterThan(0);
   });
   test("POST /posts", { tag: TAG.SMOKE }, async () => {
     const response = await apiContext.post("/posts", {
@@ -27,12 +27,12 @@ test.describe("API Request Tests", () => {
         userId: 1,
       },
     });
-    expect(response.status()).toBe(201);
+    await expect(response.status()).toBe(201);
     const data = await response.json();
-    expect(data).toHaveProperty("id");
-    expect(data.title).toBe("foo");
-    expect(data.body).toBe("bar");
-    expect(data.userId).toBe(1);
+    await expect(data).toHaveProperty("id");
+    await expect(data.title).toBe("foo");
+    await expect(data.body).toBe("bar");
+    await expect(data.userId).toBe(1);
   });
 
   test.afterAll(async () => {

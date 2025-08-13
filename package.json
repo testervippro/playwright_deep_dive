@@ -12,6 +12,7 @@
   "devDependencies": {
     "@eslint/js": "^9.32.0",
     "@playwright/test": "^1.54.2",
+    "@types/csv-parse": "^1.1.12",
     "@types/node": "^24.1.0",
     "@typescript-eslint/eslint-plugin": "^8.38.0",
     "@typescript-eslint/parser": "^8.38.0",
@@ -27,10 +28,13 @@
     "body-parser": "^2.2.0",
     "cookie-parser": "^1.4.7",
     "cors": "^2.8.5",
+    "csv": "^6.4.1",
+    "csv-parse": "^6.1.0",
     "diff": "^8.0.2",
     "ejs": "^3.1.10",
     "eslint-plugin-playwright": "^2.2.2",
     "express": "^5.1.0",
+    "playwright": "^1.54.2",
     "youtube-captions-scraper": "^2.0.3"
   },
   "directories": {

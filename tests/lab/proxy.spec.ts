@@ -1,5 +1,5 @@
 import { test as base, expect, chromium } from "@playwright/test";
-
+import { exec } from "child_process";
 /*  Past to powerShell to run mitmproxy
 @'
 from mitmproxy import http
@@ -33,8 +33,10 @@ const test = base.extend({
   },
 });
 
-test("Use mitmproxy in Playwright Test", async ({ context }) => {
+test.skip("Use mitmproxy in Playwright Test", async ({ context }) => {
   const page = await context.newPage();
+
   await page.goto("https://playwright.dev/docs/api/class-testoptions");
   console.log("Page title:", await page.title());
+  page.close();
 });

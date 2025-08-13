@@ -13,8 +13,7 @@ import { defineConfig, devices } from "@playwright/test";
  */
 export default defineConfig({
   testDir: "./tests",
-  testMatch: "**.spec.ts",
-
+  testMatch: ["**/*.spec.ts", "**/*.test.ts"],
   /* Run tests in files in parallel */
   fullyParallel: true,
 
@@ -48,7 +47,6 @@ export default defineConfig({
     {
       name: "setup db",
       testMatch: /global\.setup\.ts/,
-      teardown: "cleanup db",
     },
     {
       name: "cleanup db",
