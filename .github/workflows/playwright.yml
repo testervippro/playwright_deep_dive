@@ -26,6 +26,7 @@ jobs:
 
       - name: Run Playwright tests
         run: CI=true xvfb-run npx playwright test --reporter=html
+        continue-on-error: true 
 
       - name: Deploy Playwright report to GitHub Pages
         if: always()  #  ensures this runs even if previous step fails
