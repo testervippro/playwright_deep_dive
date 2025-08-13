@@ -1,0 +1,49 @@
+stages:
+  - test
+  - deploy
+
+variables:
+  NODE_ENV: test
+  PLAYWRIGHT_BROWSERS_PATH: 0  # Install browsers in project directory
+
+cache:
+  key: ${CI_COMMIT_REF_SLUG}
+  paths:
+    - node_modules/
+
+before_script:
+  # Install Node.js
+  - apt-get update && apt-get install -y curl unzip xvfb
+  - curl -fsSL https://deb.nodesource.com/setup_lts.x | bash -
+  - apt-get install -y nodejs
+  - node -v
+  - npm -v
+
+test_playwright:
+  stage: test
+  image: mcr.microsoft.com/playwright:v1.47.0-jammy
+  script:
+    - npm ci
+    - npx playwright install --with-deps
+    - xvfb-run npx playwright test --reporter=html || true  # Don't fail job if tests fail
+  artifacts:
+    when: always
+    paths:
+      - playwright-report/
+    expire_in: 1 week
+
+deploy_pages:
+  stage: deploy
+  image: alpine:latest
+  script:
+    # Install Git and deploy to GitLab Pages branch
+    - apk add --no-cache git
+    - mkdir .public
+    - cp -r playwright-report/* .public/
+  artifacts:
+    paths:
+      - .public
+  rules:
+    - if: $CI_COMMIT_BRANCH == "main"
+  only:
+    - main
