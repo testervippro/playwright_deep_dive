@@ -28,6 +28,7 @@ jobs:
         run: CI=true xvfb-run npx playwright test --reporter=html
 
       - name: Deploy Playwright report to GitHub Pages
+        if: always()  #  ensures this runs even if previous step fails
         uses: peaceiris/actions-gh-pages@v3
         with:
           github_token: ${{ secrets.GITHUB_TOKEN }}
