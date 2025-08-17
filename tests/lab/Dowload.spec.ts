@@ -2,13 +2,20 @@ import { test, expect } from "@playwright/test";
 import path from "path";
 import fs from "fs";
 import { exec } from "child_process";
+import { fileURLToPath } from "url";
+import { dirname } from "path";
 
-const runLocalHost = "node locator.js";
-
-exec(runLocalHost);
+const __filename = fileURLToPath(import.meta.url);
+const __dirname = dirname(__filename);
 
 test("Download test.txt from local server", async ({ page }) => {
+  const runLocalHost = "node locator.cjs";
+
+  exec(runLocalHost);
+
   // Go to your local page with the download link
+
+  // Check port open
   await page.goto("http://localhost:4000");
 
   // Start waiting for the download before clicking (don't await yet)
