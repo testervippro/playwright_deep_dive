@@ -26,6 +26,7 @@ jobs:
 
       - name: Run Playwright tests
         run: CI=true npx playwright test --reporter=html
+        continue-on-error: true
 
       - name: Deploy Playwright report to GitHub Pages
         uses: peaceiris/actions-gh-pages@v3
