@@ -20,11 +20,29 @@ jobs:
         with:
           node-version: "lts/*"
 
+      # Cache node_modules
+      - name: Cache node_modules
+        uses: actions/cache@v4
+        with:
+          path: node_modules
+          key: ${{ runner.os }}-modules-${{ hashFiles('**/package-lock.json') }}
+          restore-keys: |
+            ${{ runner.os }}-modules-
+
+      # Cache Playwright browsers
+      - name: Cache Playwright browsers
+        uses: actions/cache@v4
+        with:
+          path: ~/.cache/ms-playwright
+          key: ${{ runner.os }}-browsers-${{ hashFiles('**/package-lock.json') }}
+          restore-keys: |
+            ${{ runner.os }}-browsers-
+
       # Install dependencies
       - name: Install dependencies
         run: npm ci
 
-      # Install Playwright browsers
+      # Install Playwright browsers (will skip if cache restored)
       - name: Install Playwright Browsers
         run: npx playwright install --with-deps
 
