@@ -2,6 +2,7 @@
   "name": "playwright_deep_dive",
   "version": "1.0.0",
   "main": "index.js",
+  "type": "module",
   "scripts": {
     "dev": "nodemon app\\login\\server.js",
     "test": "npx playwright test"
