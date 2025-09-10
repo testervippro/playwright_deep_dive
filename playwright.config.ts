@@ -14,6 +14,19 @@ import { ProjectConfig } from './ProjectConfig';
 /**
  * @see https://playwright.dev/docs/test-configuration
  */
+// import config from "../playwright.config";
+// test("Add custom property to config", async () => {
+//     console.log(config.use?.baseURLThoaikx);
+//     console.log(config.use?.dm);
+// });
+// import { PlaywrightTestConfig } from "playwright/test";
+// export interface ProjectConfig extends PlaywrightTestConfig{
+//     use ?: PlaywrightTestConfig['use'] & {
+//         baseURLThoaikx?: string;
+//         dm?: boolean;
+//         headloss?: boolean;
+//     }
+// }
 const config: ProjectConfig = {
    globalSetup: globalCache.setup, 
     globalTeardown: globalCache.teardown,
